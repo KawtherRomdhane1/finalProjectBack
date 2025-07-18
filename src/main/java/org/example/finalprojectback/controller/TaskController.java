@@ -28,10 +28,10 @@ public class TaskController {
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
 
-    // Read (tous les utilisateurs)
+    // Read (tous les taches)
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks() {
-        List<Task> Tasks = taskService.getAllTask();
+        List<Task> Tasks = taskService.getAllTasks();
         return new ResponseEntity<>(Tasks, HttpStatus.OK);
     }
 

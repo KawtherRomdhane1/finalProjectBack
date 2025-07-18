@@ -6,11 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -22,8 +25,14 @@ public class User {
    private Long id;
    private String username;
    private String email;
-   private LocalDate createdAt;
-   private LocalDate updatedAt;
+
+   @CreationTimestamp
+   private LocalDateTime createdAt;
+
+   @UpdateTimestamp
+   private LocalDateTime updatedAt;
+
+
    public Long getId() {
       return id;
    }
@@ -48,19 +57,4 @@ public class User {
       this.email = email;
    }
 
-   public LocalDate getCreatedAt() {
-      return createdAt;
-   }
-
-   public void setCreatedAt(LocalDate createdAt) {
-      this.createdAt = createdAt;
-   }
-
-   public LocalDate getUpdatedAt() {
-      return updatedAt;
-   }
-
-   public void setUpdatedAt(LocalDate updatedAt) {
-      this.updatedAt = updatedAt;
-   }
 }

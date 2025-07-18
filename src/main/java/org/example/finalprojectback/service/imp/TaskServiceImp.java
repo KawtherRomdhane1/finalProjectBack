@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
 
 @Service
 public class TaskServiceImp implements TaskService {
@@ -20,37 +18,33 @@ public class TaskServiceImp implements TaskService {
         this.taskRepo = taskRepo;
 
     }
-@Override
-    public List<Task> getAllTask() {
-        return taskRepo.findAll();
-
-    }
-
     @Override
     public Task createTask(Task task) {
         return taskRepo.save(task);
     }
 
-    @Override
-    public Task updateTask(Long id, Task task) {
-
-        Task existingTask = taskRepo.findById(id).get();
-        existingTask.setTitle(task.getTitle());
-        existingTask.setContent(task.getContent());
-        return taskRepo.save(existingTask);
-
+    public List<Task> getAllTasks() {
+        return taskRepo.findAll();
     }
-
-    @Override
     public Task getTaskById(Long id) {
         return taskRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tâche non trouvée avec l'ID : " + id));
     }
 
-    @Override
+
+    public Task updateTask(Long id, Task updatedTask) {
+
+        Task existingTask = getTaskById(id);
+        existingTask.setContent(updatedTask.getContent());
+        existingTask.setTitle(updatedTask.getTitle());
+        return taskRepo.save(existingTask);
+
+    }
+
+
     public void deleteTask(Long id) {
         if (!taskRepo.existsById(id)) {
-            throw new NoSuchElementException("Tâche non trouvée avec l'ID : " + id);
+            throw new EntityNotFoundException("Tâche non trouvée avec l'ID : " + id);
         }
         taskRepo.deleteById(id);
     }
